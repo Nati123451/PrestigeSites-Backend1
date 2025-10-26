@@ -1,32 +1,39 @@
-generator client { provider = "prisma-client-js" }
-datasource db { provider = "sqlite"; url = env("DATABASE_URL") }
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
 
 model Lead {
-  id           Int      @id @default(autoincrement())
+  id           Int       @id @default(autoincrement())
   name         String
   email        String
   phone        String?
   businessType String?
   message      String?
   source       String?
-  status       String   @default("new")
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  status       String    @default("new")
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
   invoices     Invoice[]
 }
 
 model Invoice {
-  id         Int      @id @default(autoincrement())
+  id         Int       @id @default(autoincrement())
   leadId     Int
-  number     String   @unique
-  currency   String   @default("ILS")
+  number     String    @unique
+  currency   String    @default("ILS")
   subtotal   Float
-  vatPercent Float    @default(18.0)
+  vatPercent Float     @default(18.0)
   vatAmount  Float
   total      Float
-  issuedAt   DateTime @default(now())
+  issuedAt   DateTime  @default(now())
   lineItems  Json
   pdfPath    String?
-  Lead       Lead     @relation(fields: [leadId], references: [id])
-  status     String   @default("issued")
+  status     String    @default("issued")
+  Lead       Lead      @relation(fields: [leadId], references: [id])
 }
+
