@@ -31,7 +31,7 @@ model Invoice {
   vatAmount  Float
   total      Float
   issuedAt   DateTime  @default(now())
-  lineItems  Json
+  lineItems  String
   pdfPath    String?
   status     String    @default("issued")
   Lead       Lead      @relation(fields: [leadId], references: [id])
